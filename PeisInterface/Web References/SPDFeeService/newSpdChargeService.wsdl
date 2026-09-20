@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://service.api.module.spd.shaphar.com" xmlns:ns1="http://schemas.xmlsoap.org/soap/http" name="newSpdChargeService" targetNamespace="http://service.api.module.spd.shaphar.com" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <xs:schema attributeFormDefault="unqualified" elementFormDefault="unqualified" targetNamespace="http://service.api.module.spd.shaphar.com" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+      <xs:element name="acceptMessage" type="tns:acceptMessage" />
+      <xs:element name="acceptMessageResponse" type="tns:acceptMessageResponse" />
+      <xs:complexType name="acceptMessage">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="message" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="acceptMessageResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="return" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="ServiceException" type="tns:ServiceException" />
+      <xs:complexType name="ServiceException">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="message" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+    </xs:schema>
+  </wsdl:types>
+  <wsdl:message name="acceptMessageResponse">
+    <wsdl:part name="parameters" element="tns:acceptMessageResponse" />
+  </wsdl:message>
+  <wsdl:message name="ServiceException">
+    <wsdl:part name="ServiceException" element="tns:ServiceException" />
+  </wsdl:message>
+  <wsdl:message name="acceptMessage">
+    <wsdl:part name="parameters" element="tns:acceptMessage" />
+  </wsdl:message>
+  <wsdl:portType name="newSpdChargeService">
+    <wsdl:operation name="acceptMessage">
+      <wsdl:input name="acceptMessage" message="tns:acceptMessage" />
+      <wsdl:output name="acceptMessageResponse" message="tns:acceptMessageResponse" />
+      <wsdl:fault name="ServiceException" message="tns:ServiceException" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="newSpdChargeServiceSoapBinding" type="tns:newSpdChargeService">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="acceptMessage">
+      <soap:operation soapAction="" style="document" />
+      <wsdl:input name="acceptMessage">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="acceptMessageResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="ServiceException">
+        <soap:fault use="literal" name="ServiceException" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="newSpdChargeService">
+    <wsdl:port name="ChargeJsonServiceImplPort" binding="tns:newSpdChargeServiceSoapBinding">
+      <soap:address location="http://172.16.8.13:8087/services/newSpdChargeService" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

@@ -1,0 +1,32 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PeisInterface", "PeisInterface\PeisInterface.csproj", "{B5650961-2F12-4649-B170-5FD610094295}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "zlSoft.Common", "zlSoft.Common\zlSoft.Common.csproj", "{1659DC77-647E-4131-A620-F01DD95B124C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "zlSoft.Business", "zlSoft.Business\zlSoft.Business.csproj", "{66CD909C-3E9D-4BD4-8628-F3E390F8075C}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{B5650961-2F12-4649-B170-5FD610094295}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B5650961-2F12-4649-B170-5FD610094295}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B5650961-2F12-4649-B170-5FD610094295}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B5650961-2F12-4649-B170-5FD610094295}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1659DC77-647E-4131-A620-F01DD95B124C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1659DC77-647E-4131-A620-F01DD95B124C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1659DC77-647E-4131-A620-F01DD95B124C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1659DC77-647E-4131-A620-F01DD95B124C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{66CD909C-3E9D-4BD4-8628-F3E390F8075C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{66CD909C-3E9D-4BD4-8628-F3E390F8075C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{66CD909C-3E9D-4BD4-8628-F3E390F8075C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{66CD909C-3E9D-4BD4-8628-F3E390F8075C}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
