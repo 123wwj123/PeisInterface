@@ -164,6 +164,70 @@ namespace zlSoft.Business
             }
         }
 
+        /// <summary>
+        /// 按条码号查询 LIS 常规检验结果（listChangGuiJG，ChaXunLX=1 医院条码号）。
+        /// 调用方式与原 ClsGetLisResult 一致（同一 LisResultUrl、同一报文格式）。
+        /// </summary>
+        /// <param name="strBarCode">条码号</param>
+        /// <param name="strStartTime">报告开始时间（样本登记时间）</param>
+        /// <param name="strEndTime">报告结束时间（样本登记时间）</param>
+        /// <param name="strMessage">返回说明；成功为"成功"，失败为错误原因</param>
+        /// <returns>羚云返回的 data 节点（报告主体列表）；失败返回 null</returns>
+        public static JArray QueryResult(string strBarCode, string strStartTime, string strEndTime, out string strMessage)
+        {
+            strMessage = "";
+            try
+            {
+                string token = GetLisToken();
+                if (string.IsNullOrEmpty(token))
+                {
+                    strMessage = "获取羚云Token失败";
+                    LogHelper.LogInfo("检验结果查询失败：获取羚云Token失败！条码号=" + strBarCode);
+                    return null;
+                }
+
+                string strUrl = zlConfiguration.GetAppSetting("LisResultUrl") +
+                                "?ChaXunLX=1&ChaXunMa=" + strBarCode +
+                                "&kaiShiSJ=" + strStartTime +
+                                "&jieShuSJ=" + strEndTime +
+                                "&JiGouID=" + zlConfiguration.GetAppSetting("LisOrgID");
+                string strOut = HttpService.Post("", strUrl, token, "GET");
+
+                if (string.IsNullOrEmpty(strOut))
+                {
+                    strMessage = "LIS无返回";
+                    return null;
+                }
+
+                JObject jobj = JObject.Parse(strOut);
+                string strCode = jobj["code"] != null ? jobj["code"].ToString() : "";
+                if (strCode == "0")
+                {
+                    JToken data = jobj["data"];
+                    if (data != null && data.Type == JTokenType.Array)
+                    {
+                        strMessage = "成功";
+                        return (JArray)data;
+                    }
+                    strMessage = "成功";
+                    return new JArray();
+                }
+
+                strMessage = jobj["message"] != null && jobj["message"].Type != JTokenType.Null
+                    ? jobj["message"].ToString()
+                    : strOut;
+                if (string.IsNullOrEmpty(strMessage)) strMessage = "LIS查询失败";
+                LogHelper.LogInfo("条码号【" + strBarCode + "】的LIS结果查询失败，" + strMessage);
+                return null;
+            }
+            catch (Exception ex)
+            {
+                LogHelper.LogInfo("检验结果查询API异常，条码号=" + strBarCode + "，错误：" + ex.Message);
+                strMessage = "系统异常：" + ex.Message;
+                return null;
+            }
+        }
+
         /// <summary>组装羚云 revokeShengQingDanBySQD 撤销报文（结构与原 ClsCancelLisApply 一致）</summary>
         private static string BuildCancelJson(LisApplyInfo info, string reqNo)
         {

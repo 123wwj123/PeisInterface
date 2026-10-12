@@ -126,7 +126,19 @@ namespace SpdService
                 ////同步LIS结果到中间库
                 //ClsGetLisResult.GetLisResult(cmd, strMDDataType, Program.gstrToken);
                 ////同步LIS变动结果到中间库
-                ClsGetLisResultAgain.GetLisResult(cmd, strMDDataType, Program.gstrToken);
+                //ClsGetLisResultAgain.GetLisResult(cmd, strMDDataType, Program.gstrToken);
+
+                //检验医嘱状态回传体检系统（调鼎LIS接口 3.医嘱状态回传，state=3 结果完成）
+                ClsSendLisStatus.SendLisStatus();
+
+                //检验二次审核（重新审核）医嘱状态回传体检系统
+                ClsSendLisStatus.SendLisStatusAgain();
+
+                //PACS项目状态回传体检系统（调鼎PACS接口 3.状态回传，state=8 审核）
+                ClsSendPacsStatus.SendPacsStatus();
+
+                //PACS二次审核（重新审核）项目状态回传体检系统
+                ClsSendPacsStatus.SendPacsStatusAgain();
             }
             catch (Exception ex)
             {

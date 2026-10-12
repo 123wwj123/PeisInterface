@@ -116,6 +116,73 @@ namespace zlSoft.Business
             return result;
         }
         /// <summary>
+        /// 以 JSON 方式 POST 请求体（Content-Type: application/json），
+        /// 用于调用三方（调鼎）无需 Token 的 JSON 接口（如状态回传）。
+        /// </summary>
+        public static string PostJson(string req_data, string url)
+        {
+            System.GC.Collect();
+
+            string result = "";
+            byte[] data = Encoding.UTF8.GetBytes(req_data);
+
+            HttpWebRequest request = null;
+            HttpWebResponse response = null;
+
+            try
+            {
+                ServicePointManager.DefaultConnectionLimit = 200;
+                if (url.StartsWith("https", StringComparison.OrdinalIgnoreCase))
+                {
+                    ServicePointManager.ServerCertificateValidationCallback =
+                            new RemoteCertificateValidationCallback(CheckValidationResult);
+                }
+                ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls;
+
+                request = (HttpWebRequest)WebRequest.Create(url);
+                request.Method = "POST";
+                request.Timeout = 30000;
+                request.ContentType = "application/json; charset=UTF-8";
+
+                if (!string.IsNullOrEmpty(req_data))
+                {
+                    request.ContentLength = data.Length;
+                    request.Proxy = null;
+                    Stream newStream = request.GetRequestStream();
+                    newStream.Write(data, 0, data.Length);
+                }
+
+                response = (HttpWebResponse)request.GetResponse();
+                StreamReader sr = new StreamReader(response.GetResponseStream(), Encoding.UTF8);
+                result = sr.ReadToEnd().Trim();
+                sr.Close();
+            }
+            catch (System.Threading.ThreadAbortException)
+            {
+                System.Threading.Thread.ResetAbort();
+            }
+            catch (WebException e)
+            {
+                LogHelper.LogInfo(e.Message);
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+            finally
+            {
+                if (response != null)
+                {
+                    response.Close();
+                }
+                if (request != null)
+                {
+                    request.Abort();
+                }
+            }
+            return result;
+        }
+        /// <summary>
         /// 以 XML 方式 POST 请求体（Content-Type: application/xml），用于回传检查报告到体检接口。
         /// </summary>
         public static string PostXml(string req_data, string url)

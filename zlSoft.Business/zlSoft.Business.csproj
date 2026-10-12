@@ -75,7 +75,9 @@
     <Compile Include="ClsGetPacsResult.cs" />
     <Compile Include="ClsGetPacsResultAgain.cs" />
     <Compile Include="ClsSendLisApply.cs" />
+    <Compile Include="ClsSendLisStatus.cs" />
     <Compile Include="ClsSendPacsApply.cs" />
+    <Compile Include="ClsSendPacsStatus.cs" />
     <Compile Include="ClsSendTjLisCriti.cs" />
     <Compile Include="ClsSendTjLisReport.cs" />
     <Compile Include="ClsSendTjReport.cs" />
@@ -92,10 +94,12 @@
     <Compile Include="LisApplyInfo.cs" />
     <Compile Include="LisApplyJson.cs" />
     <Compile Include="LisApplyXml.cs" />
+    <Compile Include="LisResultJson.cs" />
     <Compile Include="LisCancelXml.cs" />
     <Compile Include="PacsApplyInfo.cs" />
     <Compile Include="PacsApplyJson.cs" />
     <Compile Include="PacsApplyXml.cs" />
+    <Compile Include="PacsResultJson.cs" />
     <Compile Include="PacsCancelXml.cs" />
     <Compile Include="PatientInfo.cs" />
     <Compile Include="PatientRegisterJson.cs" />

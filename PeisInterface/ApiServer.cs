@@ -28,6 +28,8 @@ namespace SpdService
         // 路由路径（不区分大小写）
         private const string PATH_PATIENT_REGISTER = "/api/patient/register";
         private const string PATH_FEE_CHARGE = "/api/fee/charge";
+        private const string PATH_LIS_RESULT = "/api/lis/result";
+        private const string PATH_PACS_RESULT = "/api/pacs/result";
         private const string PATH_FEE_CREATE = "/api/fee/create";
         private const string PATH_LIS_APPLY = "/api/lis/apply";
         private const string PATH_PACS_APPLY = "/api/pacs/apply";
@@ -211,6 +213,31 @@ namespace SpdService
 
                     return;
                 }
+
+                // 三方 JSON 检验结果查询（调鼎LIS接口 2.1，按条码号查询）
+                if (path.Equals(PATH_LIS_RESULT, StringComparison.OrdinalIgnoreCase))
+                {
+                    string requestJson = ReadRequestBody(ctx.Request);
+
+                    string responseJson = LisResultJson.Process(requestJson);
+
+                    WriteJsonResponse(ctx, 200, responseJson);
+
+                    return;
+                }
+
+                // 三方 JSON 检查结果查询（调鼎PACS接口 2.1，按体检号+检查类型查询）
+                if (path.Equals(PATH_PACS_RESULT, StringComparison.OrdinalIgnoreCase))
+                {
+                    string requestJson = ReadRequestBody(ctx.Request);
+
+                    string responseJson = PacsResultJson.Process(requestJson);
+
+                    WriteJsonResponse(ctx, 200, responseJson);
+
+                    return;
+                }
+
 
                 if (!path.Equals(PATH_UNIFIED, StringComparison.OrdinalIgnoreCase))
                 {
